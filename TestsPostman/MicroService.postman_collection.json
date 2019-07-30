@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "ee1731f8-52e8-4db3-b2f0-0d7b3c556c04",
+		"name": "MicroService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Admin produit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01d3b819-c8dc-4e59-a451-61e44b23a02b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9090/AdminProduit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"AdminProduit"
+					]
+				},
+				"description": "Requete de test nominal du service admin produit"
+			},
+			"response": []
+		},
+		{
+			"name": "GET  ProduitsTriAlpha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18f0d620-3c99-4f82-baba-035caf955f17",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9090/ProduitsTriAlpha",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"ProduitsTriAlpha"
+					]
+				},
+				"description": "Test nominal du produit tri alpha"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /Produits -> Ajouter Produit cas nominal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c519a721-de84-4619-ab7e-379bd39f890f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 4,\r\n  \"nom\": \"Ecran d'ordinateur\",\r\n  \"prix\": 200,\r\n  \"prixAchat\": 100\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/Produits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"Produits"
+					]
+				},
+				"description": "Cas nominal d'ajouterProduit sensé renvoyé un code 201"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /Produits -> Ajouter Produit cas erreur prix =0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fae8daa-1b29-4aff-addc-334ab3ff0903",
+						"exec": [
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"un produit avec un prix de vente valant 0 ne peut être ajouté\");",
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 5,\r\n  \"nom\": \"Ecran 4K\",\r\n  \"prix\": 0,\r\n  \"prixAchat\": 100\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/Produits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"Produits"
+					]
+				},
+				"description": "Code retour attendu : 400"
+			},
+			"response": []
+		}
+	]
+}
