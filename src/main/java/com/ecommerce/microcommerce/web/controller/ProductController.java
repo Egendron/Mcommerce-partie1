@@ -89,12 +89,18 @@ public class ProductController {
 
     //Récupérer la liste des produits
     @RequestMapping(value = "/AdminProduit", method = RequestMethod.GET)
-    public List<String> calculerMargeProduit () {
-        List<String> result = new ArrayList<String>();
-        List<Product> produits = productDao.findAll();
-        produits.stream().forEach(p -> result.add(p.toString()+": "+p.getMargeProduit()));
-        return result;
+    public ResponseEntity<List<String>> calculerMargeProduit () {
 
+
+        List<String> body = new ArrayList<String>();
+        List<Product> produits = productDao.findAll();
+        produits.stream().forEach(p -> body.add(p.toString()+": "+getMargeProduit(p.getPrix(),p.getPrixAchat())));
+        return ResponseEntity.ok(body);
+
+    }
+
+    public int  getMargeProduit(int prix, int prixAchat){
+        return prix-prixAchat;
     }
 
     //Récupérer la liste des produits
